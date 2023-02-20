@@ -1,24 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { CircularProgress } from "@mui/material";
 import logo from './logo.svg';
 import './App.css';
+import routes from "./config/routes";
+import { auth } from "./config/firebase";
+import Center from "./components/utils/Center";
+import AuthChecker from "./components/auth/AuthChecker";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.info("User detected.");
+      } else {
+        console.info("No user detected");
+      }
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Center>
+      <CircularProgress />
+    </Center>
+  );
+
+  return (
+    <div>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Routes>
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                route.protected ? (
+                  <AuthChecker>
+                    <route.component />
+                  </AuthChecker>
+                ) : (
+                  <route.component />
+                )
+              }
+            />
+          ))}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
