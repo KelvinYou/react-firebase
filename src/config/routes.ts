@@ -1,5 +1,6 @@
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import Error from "../pages/Error";
 
 interface RouteType {
   path: string;
@@ -18,6 +19,12 @@ const routes: RouteType[] = [
   {
     path: "/login",
     component: Login,
+    name: "Login Screen",
+    protected: false,
+  },
+  {
+    path: "*",
+    component: Error,
     name: "Login Screen",
     protected: false,
   },
