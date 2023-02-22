@@ -25,7 +25,7 @@ const routes: RouteType[] = [
   {
     path: "*",
     component: Error,
-    name: "Login Screen",
+    name: "Error Screen",
     protected: false,
   },
 ];

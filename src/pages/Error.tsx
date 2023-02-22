@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import Center from "../components/utils/Center";
+import { Button, Typography } from "@mui/material";
 
 const Error = () => {
   const navigate = useNavigate();
@@ -15,9 +16,9 @@ const Error = () => {
       <div>
         Error 404: Page Not Found
       </div>
-      <button onClick={ backToHomePage }>
+      <Button onClick={ backToHomePage }>
         Back To Home Page
-      </button>
+      </Button>
     </Center>
   )
 }
