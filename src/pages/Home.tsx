@@ -35,9 +35,9 @@ const Home = ({}: Props) => {
     }
   }
 
-  const updateTodo = async (id: string, age: number) => {
+  const updateTodo = async (id: string, subject: string) => {
     const userDoc = doc(db, "todos", id);
-    const newFields = { age: age + 1 };
+    const newFields = { subject: subject + 1 };
     await updateDoc(userDoc, newFields);
   };
 
@@ -49,7 +49,10 @@ const Home = ({}: Props) => {
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(collection(db, "todos"));
-      setTodos(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setTodos(data.docs.map((doc) => ({ 
+        ...doc.data(), 
+        id: doc.id,
+      })));
     };
 
     getUsers();
@@ -73,10 +76,10 @@ const Home = ({}: Props) => {
           <div>
             {" "}
             <h1>ID: {todo.id}</h1>
-            {/* <h1>Age: {todo.subject}</h1> */}
+            {/* <h1>Age: {todo["subject"]}</h1> */}
             <button
               onClick={() => {
-                // updatetodo(todo.id, todo.age);
+                // updatetodo(todo.id, todo.subject);
               }}
             >
               {" "}
