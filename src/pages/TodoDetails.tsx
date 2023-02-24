@@ -8,8 +8,8 @@ interface Props {}
 const TodoDetails = ({}: Props) => {
   const [todo, setTodo] = useState<any>(null);
   const { id } = useParams();
+  
   useEffect(() => {
-    console.info("hello")
     const getTodo = async () => {
       const docRef = doc(collection(db, "todos"), id);
       const docSnap = await getDoc(docRef);
@@ -22,20 +22,6 @@ const TodoDetails = ({}: Props) => {
         console.log("No such document!");
       }
     };
-    // const getTodo = async () => {
-    //     console.info("id: " + id);
-        // const todoRef = await getDoc(collection(db, "todos", id));
-
-        // console.log("todoRef: " + todoRef);
-        // const todoDoc = await getDoc(todoRef);
-        
-        // if (todoDoc.exists()) {
-        //   return { ...todoDoc.data(), id: todoDoc.id };
-        // } else {
-        //   console.log("No such document!");
-        //   return null;
-        // }
-    //   };
     getTodo();
   }, [id]);
 

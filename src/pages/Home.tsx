@@ -15,7 +15,6 @@ import {
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore';
-import NavBar from '../components/NavBar';
 
 interface Props {}
 
