@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import Error from "../pages/Error";
 import Layout from "../components/Layout";
 import Profile from "../pages/Profile";
+import TodoDetails from "../pages/TodoDetails";
 
 interface RouteType {
   path: string;
@@ -28,6 +29,12 @@ const routes: RouteType[] = [
     path: "/profile",
     component: Profile,
     name: "Login Screen",
+    protected: true,
+  },
+  {
+    path: "/todos/:id",
+    component: TodoDetails,
+    name: "Todo Details Screen",
     protected: true,
   },
   {

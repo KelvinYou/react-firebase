@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Logout from "../components/auth/Logout";
 import Center from "../components/utils/Center";
 import { db } from "../config/firebase";
+import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -104,6 +105,9 @@ const Home = ({}: Props) => {
                 {" "}
                 Delete
               </button>
+              <Link to={`/todos/${todo.id}`}>
+                <button>View Details</button>
+              </Link>
             </div>
           );
         })}
