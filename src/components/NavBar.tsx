@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 import Container from "react-bootstrap/Container";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
 import {
   AiFillStar,
@@ -15,44 +19,58 @@ const NavBar = () => {
 
   return (
     <div>
-      <Navbar
-        expanded={expand}
-        fixed="top"
-        expand="md"
-      >
-        <Container>
-          <Navbar.Toggle
-            aria-controls="responsive-navbar-nav"
-            onClick={() => {
-              setExpand(!expand);
-            }}
+      <Navbar key='xl' bg="light" expand='xl' className="mb-3">
+        <Container fluid>
+          <Navbar.Brand href="#">React Firebase</Navbar.Brand>
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-xl`} />
+          <Navbar.Offcanvas
+            id={`offcanvasNavbar-expand-${expand}`}
+            aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
+            placement="end"
           >
-            <span></span>
-            <span></span>
-            <span></span>
-          </Navbar.Toggle>
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+                React Firebase
+              </Offcanvas.Title>
+            </Offcanvas.Header>
 
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ms-auto" defaultActiveKey="#home">
-              <Nav.Item>
-                <Nav.Link as={Link} to="/" onClick={() => setExpand(false)}>
-                  <AiOutlineHome style={{ marginBottom: "2px" }} /> Home
-                </Nav.Link>
-              </Nav.Item>
-
-              <Nav.Item>
-                <Nav.Link as={Link} to="/login" onClick={() => setExpand(false)}>
-                  <AiOutlineHome style={{ marginBottom: "2px" }} /> Login
-                </Nav.Link>
-              </Nav.Item>
-
-              <Nav.Item>
-                <Nav.Link as={Link} to="/profile" onClick={() => setExpand(false)}>
-                  <AiOutlineHome style={{ marginBottom: "2px" }} /> Profile
-                </Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Navbar.Collapse>
+            <Offcanvas.Body>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link as={Link}
+                to="/">Home</Nav.Link>
+                  <Nav.Link as={Link}
+                to="/profile">Profile</Nav.Link>
+                  <NavDropdown
+                    title="Dropdown"
+                    id={`offcanvasNavbarDropdown-expand-${expand}`}
+                  >
+                    <NavDropdown.Item 
+                    as={Link}
+                    to="/">
+                      Home
+                      </NavDropdown.Item>
+                    <NavDropdown.Item 
+                    as={Link}
+                    to="/profile">
+                      Profile
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#action5">
+                      Something else here
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </Nav>
+                <Form className="d-flex">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    aria-label="Search"
+                  />
+                  <Button variant="outline-success">Search</Button>
+                </Form>
+              </Offcanvas.Body>
+          </Navbar.Offcanvas>
         </Container>
       </Navbar>
     </div>

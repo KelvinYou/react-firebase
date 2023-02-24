@@ -18,12 +18,18 @@ import NavBar from '../components/NavBar';
 
 interface Props {}
 
+interface Todo {
+  id: string;
+  subject: string;
+  isCompleted: boolean;
+}
+
 const Home = ({}: Props) => {
   useEffect(() => {}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [subject, setSubject] = useState("");
 
-  const [todos, setTodos] = useState<{ id: string }[]>([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
   
   const addSubmit = async () => {
     console.info("add: " + subject);
@@ -36,9 +42,9 @@ const Home = ({}: Props) => {
     }
   }
 
-  const updateTodo = async (id: string, subject: string) => {
+  const updateTodo = async (id: string, completed: boolean) => {
     const userDoc = doc(db, "todos", id);
-    const newFields = { subject: subject + 1 };
+    const newFields = { completed: !completed };
     await updateDoc(userDoc, newFields);
   };
 
@@ -50,9 +56,10 @@ const Home = ({}: Props) => {
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(collection(db, "todos"));
-      setTodos(data.docs.map((doc) => ({ 
-        ...doc.data(), 
+      setTodos(data.docs.map((doc) => ({
         id: doc.id,
+        subject: doc.data().subject as string,
+        isCompleted: doc.data().completed as boolean,
       })));
     };
 
@@ -62,7 +69,6 @@ const Home = ({}: Props) => {
 
   return (
     <div>
-      <NavBar/>
       <Center height={"85vh"}>
         <div className="input-container">
           <input type="text"
@@ -81,10 +87,10 @@ const Home = ({}: Props) => {
             <div>
               {" "}
               <h1>ID: {todo.id}</h1>
-              {/* <h1>Age: {todo["subject"]}</h1> */}
+              <h1>{todo.subject} - {todo.isCompleted ? "Completed" : "Not completed"}</h1>
               <button
                 onClick={() => {
-                  // updatetodo(todo.id, todo.subject);
+                  updateTodo(todo.id, todo.isCompleted);
                 }}
               >
                 {" "}
@@ -102,7 +108,6 @@ const Home = ({}: Props) => {
           );
         })}
 
-        <Logout />
       </Center>
     </div>
     
