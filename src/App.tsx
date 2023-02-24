@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CircularProgress } from "@mui/material";
 import logo from './logo.svg';
 import './App.css';
-import routes from "./config/routes";
+import routes from "./routes/routes";
 import { auth } from "./config/firebase";
 import Center from "./components/utils/Center";
 import AuthChecker from "./components/auth/AuthChecker";

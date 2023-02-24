@@ -14,6 +14,7 @@ import {
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore';
+import NavBar from '../components/NavBar';
 
 interface Props {}
 
@@ -60,7 +61,9 @@ const Home = ({}: Props) => {
 
 
   return (
-    <Center>
+    <div>
+      <NavBar/>
+      <Center height={"85vh"}>
         <div className="input-container">
           <input type="text"
             placeholder='what do you want to do?'
@@ -68,36 +71,41 @@ const Home = ({}: Props) => {
             onChange={(e) => setSubject(e.target.value)}
           />
         </div>
+
         <div className="btn-container">
           <button onClick={ addSubmit }>Add-Todo</button>
         </div>
+
         {todos.map((todo) => {
-        return (
-          <div>
-            {" "}
-            <h1>ID: {todo.id}</h1>
-            {/* <h1>Age: {todo["subject"]}</h1> */}
-            <button
-              onClick={() => {
-                // updatetodo(todo.id, todo.subject);
-              }}
-            >
+          return (
+            <div>
               {" "}
-              Edit
-            </button>
-            <button
-              onClick={() => {
-                deleteTodo(todo.id);
-              }}
-            >
-              {" "}
-              Delete
-            </button>
-          </div>
-        );
-      })}
-      <Logout />
-    </Center>
+              <h1>ID: {todo.id}</h1>
+              {/* <h1>Age: {todo["subject"]}</h1> */}
+              <button
+                onClick={() => {
+                  // updatetodo(todo.id, todo.subject);
+                }}
+              >
+                {" "}
+                Edit
+              </button>
+              <button
+                onClick={() => {
+                  deleteTodo(todo.id);
+                }}
+              >
+                {" "}
+                Delete
+              </button>
+            </div>
+          );
+        })}
+
+        <Logout />
+      </Center>
+    </div>
+    
   )
 }
 
