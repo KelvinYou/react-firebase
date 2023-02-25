@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useParams } from "react-router-dom";
+import Center from "../components/utils/Center";
 
 interface Props {}
 
@@ -30,12 +31,12 @@ const TodoDetails = ({}: Props) => {
   }
 
   return (
-    <div>
+    <Center height={"85vh"}>
       <h1>Todo Details</h1>
-      <p>ID: {todo.id}</p>
+      <h4>ID: {todo.id}</h4>
       <p>Subject: {todo.subject}</p>
       <p>Completed: {todo.isCompleted ? "Yes" : "No"}</p>
-    </div>
+    </Center>
   );
 };
 

@@ -2,9 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Logout from "../components/auth/Logout";
 import Center from "../components/utils/Center";
 import { db } from "../config/firebase";
-import { Link } from "react-router-dom";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Link, useNavigate } from "react-router-dom";
+
+import EditIcon from "@mui/icons-material/EditOutlined";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import ViewAgendaOutlined from "@mui/icons-material/ViewAgendaOutlined";
+
+import { Box, TextField, Button, Grid } from "@mui/material";
+
+
 import {
   collection, 
   query,
@@ -26,6 +32,7 @@ interface Todo {
 
 const Home = ({}: Props) => {
   useEffect(() => {}, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const navigate = useNavigate();
 
   const [subject, setSubject] = useState("");
 
@@ -54,65 +61,106 @@ const Home = ({}: Props) => {
   };
 
   useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(collection(db, "todos"));
-      setTodos(data.docs.map((doc) => ({
+    const unsubscribe = onSnapshot(collection(db, "todos"), (snapshot) => {
+      const updatedTodos = snapshot.docs.map((doc) => ({
         id: doc.id,
         subject: doc.data().subject as string,
         isCompleted: doc.data().completed as boolean,
-      })));
-    };
-
-    getUsers();
+      }));
+      setTodos(updatedTodos);
+    });
+    return unsubscribe;
   }, []);
 
 
   return (
-    <div>
-      <Center height={"85vh"}>
-        <div className="input-container">
-          <input type="text"
-            placeholder='what do you want to do?'
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          />
-        </div>
+    <>
+      <Box
+        display={"flex"}
+        alignItems={"center"}
+        flexDirection={"column"}
+        width={"90vw"}
+        maxWidth={"400px"}
+        boxShadow={2}
+        margin={3}
+      >
+        <TextField 
+          error={false}
+          fullWidth 
+          id="outlined-search" 
+          label="New To Do" 
+          type="search" 
+          placeholder='what do you want to do?'
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+        />
 
-        <div className="btn-container">
-          <button onClick={ addSubmit }>Add-Todo</button>
-        </div>
+        <Button 
+          onClick={ addSubmit }
+          fullWidth
+          color='primary'
+        >
+          Add-Todo
+        </Button>
+      </Box>
 
-        {todos.map((todo) => {
-          return (
-            <div>
-              {" "}
-              <h1>ID: {todo.id}</h1>
-              <h1>{todo.subject} - {todo.isCompleted ? "Completed" : "Not completed"}</h1>
-              <button
-                onClick={() => {
-                  updateTodo(todo.id, todo.isCompleted);
-                }}
-              >
-                {" "}
-                Edit
-              </button>
-              <button
-                onClick={() => {
-                  deleteTodo(todo.id);
-                }}
-              >
-                {" "}
-                Delete
-              </button>
-              <Link to={`/todos/${todo.id}`}>
-                <button>View Details</button>
-              </Link>
-            </div>
-          );
-        })}
+      {todos.map((todo) => {
+        return (
+          <Box
+            key={todo.id}
+            display={"flex"}
+            alignItems={"center"}
+            flexDirection={"column"}
+            boxShadow={2}
+            margin={3}
+            bgcolor="lightgray"
+            width={"90vw"}
+            maxWidth={"400px"}
+          >
+            <h1>{todo.subject}</h1>
+            <Grid
+              container spacing={3}
+            >
+              <Grid item xs>
+                <Button
+                  fullWidth
+                  color='primary'
+                  onClick={ () => navigate(`/todos/${todo.id}`) }
+                >
+                  <ViewAgendaOutlined />
+                </Button>
+              </Grid>
 
-      </Center>
-    </div>
+              <Grid item xs>
+
+                <Button 
+                  onClick={() => {
+                    updateTodo(todo.id, todo.isCompleted);
+                  }}
+                  fullWidth
+                  color='primary'
+                >
+                  <EditIcon />
+                </Button>
+              </Grid>
+
+              <Grid item xs>
+
+                <Button 
+                  onClick={() => {
+                    deleteTodo(todo.id);
+                  }}
+                  fullWidth
+                  color='primary'
+                >
+                  <DeleteIcon />
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        )
+      })}
+    </>
     
   )
 }
