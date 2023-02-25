@@ -1,7 +1,6 @@
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Error from "../pages/Error";
-import Layout from "../components/Layout";
 import Profile from "../pages/Profile";
 import TodoDetails from "../pages/TodoDetails";
 
