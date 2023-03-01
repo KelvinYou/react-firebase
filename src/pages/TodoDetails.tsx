@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useParams } from "react-router-dom";
 import Center from "../components/utils/Center";
@@ -11,6 +11,7 @@ const TodoDetails = ({}: Props) => {
   const { id } = useParams();
   
   useEffect(() => {
+    // One-time data fetches
     const getTodo = async () => {
       const docRef = doc(collection(db, "todos"), id);
       const docSnap = await getDoc(docRef);
@@ -23,7 +24,23 @@ const TodoDetails = ({}: Props) => {
         console.log("No such document!");
       }
     };
-    getTodo();
+    // Real time update
+    // - 
+    const updateTodo = async () => {
+      const docRef = doc(collection(db, 'todos'), id);
+      const unsubscribe = onSnapshot(docRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          setTodo({
+            id: docSnapshot.id,
+            ...docSnapshot.data(),
+          });
+        } else {
+          console.log('No such document!');
+        }
+      });
+      return () => unsubscribe();
+    };
+    updateTodo();
   }, [id]);
 
   if (!todo) {
