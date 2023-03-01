@@ -25,7 +25,6 @@ const TodoDetails = ({}: Props) => {
       }
     };
     // Real time update
-    // - 
     const updateTodo = async () => {
       const docRef = doc(collection(db, 'todos'), id);
       const unsubscribe = onSnapshot(docRef, (docSnapshot) => {
