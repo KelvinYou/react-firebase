@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import Error from "../pages/Error";
 import Profile from "../pages/Profile";
 import TodoDetails from "../pages/TodoDetails";
+import FCM from "../pages/FCM";
 
 interface RouteType {
   path: string;
@@ -23,6 +24,12 @@ const routes: RouteType[] = [
     component: Login,
     name: "Login Screen",
     protected: false,
+  },
+  {
+    path: "/messaging",
+    component: FCM,
+    name: "Firebase Cloud Messaging",
+    protected: true,
   },
   {
     path: "/profile",

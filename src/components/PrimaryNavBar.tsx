@@ -27,7 +27,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 
-const pages = ['Home', 'Profile'];
+const pages = ['Home', 'Profile', 'messaging'];
 const settings = ['Profile'];
 
 const PrimaryNavBar = () => {
