@@ -3,6 +3,8 @@ import { initializeApp } from "firebase/app";
 
 import { getAnalytics } from "firebase/analytics";
 
+import { getMessaging } from "firebase/messaging";
+
 import {
   getFirestore,
   doc,
@@ -47,3 +49,5 @@ export const analytics = getAnalytics(Firebase);
 export const auth = getAuth();
 export const Providers = { google: new GoogleAuthProvider() };
 export const db = getFirestore(Firebase);
+
+const messaging = getMessaging(Firebase);
