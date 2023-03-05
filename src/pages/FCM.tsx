@@ -1,5 +1,6 @@
 import React from 'react';
 import { getMessaging, getToken } from "firebase/messaging";
+import { Button } from '@mui/material';
 
 const FCM = () => {
   function requestPermission() {
@@ -12,7 +13,14 @@ const FCM = () => {
   };
 
   return (
-    <div>FCM</div>
+    <div>
+      FCM
+      <Button
+        onClick={ requestPermission }
+      >
+        Request Permission
+      </Button>
+    </div>
   )
 }
 
