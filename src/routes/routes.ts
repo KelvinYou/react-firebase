@@ -5,6 +5,7 @@ import Profile from "../pages/Profile";
 import TodoDetails from "../pages/TodoDetails";
 import FCM from "../pages/FCM";
 
+import * as ROUTES from "./../constants/routes";
 interface RouteType {
   path: string;
   component: any;
@@ -14,31 +15,31 @@ interface RouteType {
 
 const routes: RouteType[] = [
   {
-    path: "",
+    path: ROUTES.HOME_PATH,
     component: Home,
     name: "Home Screen",
     protected: true,
   },
   {
-    path: "/login",
+    path: ROUTES.LOGIN_PATH,
     component: Login,
     name: "Login Screen",
     protected: false,
   },
   {
-    path: "/messaging",
+    path: ROUTES.MESSAGING_PATH,
     component: FCM,
     name: "Firebase Cloud Messaging",
     protected: true,
   },
   {
-    path: "/profile",
+    path: ROUTES.PROFILE_PATH,
     component: Profile,
     name: "Login Screen",
     protected: true,
   },
   {
-    path: "/todos/:id",
+    path: ROUTES.TODO_DETAILS_PATH,
     component: TodoDetails,
     name: "Todo Details Screen",
     protected: true,
